@@ -3,21 +3,26 @@ import Event from "../models/Event.js";
 
 const router = express.Router();
 
-// POST add new event
+// ADD new event
 router.post('/', async (req, res) => {
-    if (!req.body) {
-        return res.status(400).send('You must send an event.');
-    }
 
     try {
-        const event = await Event.create(req.body);
+        const { title, description, date } = req.body;
+        if (!title || !date) {
+            return res.status(400).send('Title and date are required.');
+        }
+        const event = await Event.create({
+            title,
+            description,
+            date
+        });
         return res.status(201).send(event);
     } catch (error) {
         return res.status(500).send({ message: error.message });
     }
 });
 
-// GET list all events
+// GET all events
 router.get('/', async (req, res) => {
     try {
         const events = await Event.find();
@@ -27,8 +32,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-// GET single event
+// GET a single event
 router.get('/:id', async (req, res) => {
+
     const { id } = req.params;
 
     try {
@@ -42,8 +48,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// PATCH update single event
+// UPDATE a single event
 router.patch('/:id', async (req, res) => {
+
     const { id } = req.params;
     const { body } = req;
 
@@ -58,7 +65,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-// DELETE single event
+// DELETE a single event
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
