@@ -5,22 +5,24 @@ const router = express.Router();
 
 // ADD new event
 router.post('/', async (req, res) => {
-
     try {
-        const { title, description, date } = req.body;
+        const { title, description, date, time, location } = req.body;
         if (!title || !date) {
             return res.status(400).send('Title and date are required.');
         }
         const event = await Event.create({
             title,
             description,
-            date
+            date,
+            time,
+            location
         });
         return res.status(201).send(event);
     } catch (error) {
         return res.status(500).send({ message: error.message });
     }
 });
+
 
 // GET all events
 router.get('/', async (req, res) => {
