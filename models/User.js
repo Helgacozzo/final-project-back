@@ -31,7 +31,7 @@ const schema = new Schema({
 });
 
 schema.statics.findByEmail = function(email){
-    return this.findOne({email});
+    return this.findOne(email);
 }
 
 schema.statics.signUp = async function (email, password){
@@ -44,12 +44,12 @@ schema.statics.signUp = async function (email, password){
         throw StatusError(400, `La password non è abbastanza forte`)
     }
 
-    const emailExists = await this.exists({email});
+    const emailExists = await this.exists(email);
     if(emailExists){
         throw StatusError(400, `Questa email esiste già`)
     }
 
-    const user = await this.create({email, p});
+    const user = await this.create(email);
     
     return user;
 }
@@ -59,7 +59,7 @@ schema.statics.logIn = async function(email, password){
     const user = await this.findByEmail(email);
 
     const fail = () => {
-        throw StatusError(401, 'Incorrect Email or Password.');
+        throw StatusError(401, 'Email o Password non corretti');
     }
 
     if(!user){
