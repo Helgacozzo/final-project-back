@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 import validator from "validator";
-const { isStrongPassword, isEmail } = "validator";
+const { isStrongPassword, isEmail } = validator;
 
 const strongPasswordOptions = {
     minLength: 8,
