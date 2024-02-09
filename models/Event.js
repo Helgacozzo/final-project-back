@@ -9,13 +9,27 @@ const eventSchema = new Schema({
         maxLength: 100,
         trim: true,
     },
-    description: String,
+    description: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 250,
+        trim: true,
+    },
     date: {
         type: Date,
         required: true
     },
-    time: String, 
-    location: String 
+    time: {
+        type: String,
+        required: true
+    },
+    Location: {
+        type: String,
+        required: true,
+        minLength: 1,
+        trim: true,
+    }
 }, { timestamps: true });
 
 const Event = model('Event', eventSchema);
