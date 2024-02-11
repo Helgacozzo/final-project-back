@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 const { Schema, SchemaTypes, model } = mongoose;
 import validator from "validator";
 import { comparePassword, hashPassword } from "../lib/authHelper.js";
-import { StatusError } from "../lib/errorHelper.js";
 const { isStrongPassword, isEmail } = validator;
 
 const strongPasswordOptions = {
