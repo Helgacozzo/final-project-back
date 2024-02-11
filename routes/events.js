@@ -1,28 +1,8 @@
 import express from "express";
 import Event from "../models/Event.js";
+import { requireAdmin } from "../lib/authHelper.js";
 
 const router = express.Router();
-
-// ADD new event
-router.post('/', async (req, res) => {
-    try {
-        const { title, description, date, time, location } = req.body;
-        if (!title || !date) {
-            return res.status(400).send('Title and date are required.');
-        }
-        const event = await Event.create({
-            title,
-            description,
-            date,
-            time,
-            location
-        });
-        return res.status(201).send(event);
-    } catch (error) {
-        return res.status(500).send({ message: error.message });
-    }
-});
-
 
 // GET all events
 router.get('/', async (req, res) => {
@@ -42,9 +22,31 @@ router.get('/:id', async (req, res) => {
     try {
         const event = await Event.findById(id);
         if (!event) {
-            return res.status(404).send(`Event with ID ${id} not found.`);
+            return res.status(404).send(`L'evento con l'ID ${id} non è stato trovato.`);
         }
         return res.send(event);
+    } catch (error) {
+        return res.status(500).send({ message: error.message });
+    }
+});
+
+router.use(requireAdmin());
+
+// ADD new event
+router.post('/', async (req, res) => {
+    try {
+        const { title, description, date, time, location } = req.body;
+        if (!title || !date) {
+            return res.status(400).send('Titolo e data sono richieste.');
+        }
+        const event = await Event.create({
+            title,
+            description,
+            date,
+            time,
+            location
+        });
+        return res.status(201).send(event);
     } catch (error) {
         return res.status(500).send({ message: error.message });
     }
@@ -59,7 +61,7 @@ router.patch('/:id', async (req, res) => {
     try {
         const event = await Event.findByIdAndUpdate(id, body, { new: true });
         if (!event) {
-            return res.status(404).send(`Event with ID ${id} not found.`);
+            return res.status(404).send(`L'evento con l'ID ${id} non è stato trovato.`);
         }
         return res.send(event);
     } catch (error) {
@@ -74,9 +76,9 @@ router.delete('/:id', async (req, res) => {
     try {
         const event = await Event.findByIdAndDelete(id);
         if (!event) {
-            return res.status(404).send(`Event with ID ${id} not found.`);
+            return res.status(404).send(`L'evento con l'ID ${id} non è stato trovato.`);
         }
-        return res.send(`Event with ID ${id} has been deleted.`);
+        return res.send(`L'evento con l'ID ${id} è stato cancellato.`);
     } catch (error) {
         return res.status(500).send({ message: error.message });
     }

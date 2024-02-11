@@ -26,46 +26,46 @@ const schema = new Schema({
     }
 });
 
-schema.statics.findByEmail = function(email){
-    return this.findOne({email});
+schema.statics.findByEmail = function (email) {
+    return this.findOne({ email });
 }
 
-schema.statics.signUp = async function (email, password){
+schema.statics.signUp = async function (email, password) {
 
-    if(!isEmail(email)){
-        throw StatusError(400, 'You should send a real email.')
+    if (!isEmail(email)) {
+        throw StatusError(400, 'Dovresti iserire una email reale.')
     }
 
-    if(!isStrongPassword(password, strongPasswordOptions)){
-        throw StatusError(400, 'Password not strong enough.')
+    if (!isStrongPassword(password, strongPasswordOptions)) {
+        throw StatusError(400, 'Password non abbastanza forte.')
     }
 
-    const emailExists = await this.exists({email});
-    if(emailExists){
-        throw StatusError(400, 'Email already in use.')
+    const emailExists = await this.exists({ email });
+    if (emailExists) {
+        throw StatusError(400, 'Email già in uso.')
     }
 
     const hashedPassword = await hashPassword(password);
 
-    const user = await this.create({email, password: hashedPassword});
-    
+    const user = await this.create({ email, password: hashedPassword });
+
     return user;
 }
 
-schema.statics.logIn = async function(email, password){
+schema.statics.logIn = async function (email, password) {
 
     const user = await this.findByEmail(email);
 
     const fail = () => {
-        throw StatusError(401, 'Incorrect Email or Password.');
+        throw StatusError(401, 'Email o Password non corrette.');
     }
 
-    if(!user){
+    if (!user) {
         fail();
     }
 
     const passwordMatch = await comparePassword(password, user.password);
-    if(!passwordMatch){
+    if (!passwordMatch) {
         fail();
     }
 
@@ -73,7 +73,7 @@ schema.statics.logIn = async function(email, password){
 
 }
 
-schema.methods.clean = function(){
+schema.methods.clean = function () {
     const user = this.toObject();
     delete user.password;
     delete user.__v;
