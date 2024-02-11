@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        const user = await User.signUp(email, password);
+        const user = await User.logIn(email, password);
         const token = generateToken(user._id);
         return res.status(202).send({
             user: user.clean(),
