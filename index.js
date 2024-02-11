@@ -2,12 +2,12 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+import dotenv from "dotenv"; dotenv.config();
 import eventsRouter from "./routes/events.js";
-import User from "./models/User.js";
-dotenv.config();
-
+import authRouter from "./routes/auth.js";
+import { requireAuth, requireOwner } from "./lib/authHelper.js";
 const { EXPRESS_PORT, MONGODB_URI } = process.env;
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -17,37 +17,11 @@ app.use(express.json());
 
 app.use('/events', eventsRouter);
 
-app.post('/signup', async (req, res) => {
+app.use(cookieParser());
 
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).send(`Tutti i campi devono essere riempiti!`)
-    }
-    try {
-        const user = await User.signUp(email, password);
-        return res.status(201).send(user);
-    } catch (error) {
-        console.error(error);
-        const code = error.statusCode || 500;
-        res.status(code).send(error.message);
-    }
-});
-
-app.post('/login', async (req, res) => {
-
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).send(`Tutti i campi devono essere riempiti!`)
-    }
-    try {
-        const user = await User.logIn(email, password);
-        return res.status(202).send(user);
-    } catch (error) {
-        console.error(error);
-        const code = error.statusCode || 500;
-        res.status(code).send(error.message);
-    }
-});
+app.use('/auth', authRouter);
+app.use(requireAuth());
+app.use(requireOwner());
 
 mongoose.connect(MONGODB_URI)
     .then(() => {
