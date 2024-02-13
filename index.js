@@ -6,7 +6,6 @@ import dotenv from "dotenv"; dotenv.config();
 import eventsRouter from "./routes/events.js";
 import authRouter from "./routes/auth.js";
 import organizersRouter from "./routes/organizers.js";
-import participantsRouter from "./routes/participants.js";
 import { requireAuth } from "./lib/authHelper.js";
 const { EXPRESS_PORT, MONGODB_URI } = process.env;
 
@@ -17,13 +16,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/events', eventsRouter);
-
 app.use('/auth', authRouter);
 
 app.use(requireAuth());
-
 app.use('/organizers', organizersRouter);
-app.use('/participants', participantsRouter);
 
 
 mongoose.connect(MONGODB_URI)
