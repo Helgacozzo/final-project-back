@@ -23,7 +23,11 @@ const schema = new Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    is_admin: {
+        type: Boolean,
+        default: false,
+      }
 });
 
 schema.statics.findByEmail = function (email) {
