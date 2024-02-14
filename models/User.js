@@ -24,10 +24,11 @@ const schema = new Schema({
         type: String,
         required: true,
     },
-    is_admin: {
-        type: Boolean,
-        default: false,
-      }
+    organizerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 });
 
 schema.statics.findByEmail = function (email) {

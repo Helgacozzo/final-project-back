@@ -19,7 +19,6 @@ app.use('/auth', authRouter);
 
 app.use(requireAuth());
 
-
 mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log("Connessione a MongoDB effettuata con successo.");

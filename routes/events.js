@@ -1,6 +1,5 @@
 import express from "express";
 import Event from "../models/Event.js";
-import { requireAdmin } from "../lib/authHelper.js";
 
 const router = express.Router();
 
@@ -50,7 +49,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.use(requireAdmin());
 
 // UPDATE a single event
 router.patch('/:id', async (req, res) => {
