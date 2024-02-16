@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema, SchemaTypes, model } = mongoose;
+const { Schema, model } = mongoose;
 import validator from "validator";
 import { comparePassword, hashPassword } from "../lib/authHelper.js";
 const { isStrongPassword, isEmail } = validator;
@@ -23,11 +23,6 @@ const schema = new Schema({
     password: {
         type: String,
         required: true,
-    },
-    organizerId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
     }
 });
 

@@ -32,13 +32,15 @@ router.get('/:id', async (req, res) => {
 // ADD new event
 router.post('/', async (req, res) => {
     try {
-        const { title, description, date, time, location } = req.body;
+        const { title, description, more_info, organizer_name, date, time, location } = req.body;
         if (!title || !date) {
             return res.status(400).send('Titolo e data sono richieste.');
         }
         const event = await Event.create({
             title,
             description,
+            more_info,
+            organizer_name,
             date,
             time,
             location

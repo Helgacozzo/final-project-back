@@ -16,6 +16,15 @@ const eventSchema = new Schema({
         maxLength: 250,
         trim: true,
     },
+    more_info: {
+        type: String,
+        minLength: 1,
+        trim: true,
+    },
+    organizer_name: {
+        type: String,
+        trim: true,
+    },
     date: {
         type: Date,
         required: true
