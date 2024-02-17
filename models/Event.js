@@ -18,7 +18,6 @@ const eventSchema = new Schema({
     },
     more_info: {
         type: String,
-        minLength: 1,
         trim: true,
     },
     organizer_name: {
