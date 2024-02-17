@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-const { Schema, model } = mongoose;
 import validator from "validator";
 import { comparePassword, hashPassword } from "../lib/authHelper.js";
-const { isStrongPassword, isEmail } = validator;
 import { StatusError } from "../lib/errorHelper.js";
+const { Schema, model } = mongoose;
+const { isStrongPassword, isEmail } = validator;
 
 const strongPasswordOptions = {
     minLength: 8,
