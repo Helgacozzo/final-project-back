@@ -3,6 +3,7 @@ const { Schema, model } = mongoose;
 import validator from "validator";
 import { comparePassword, hashPassword } from "../lib/authHelper.js";
 const { isStrongPassword, isEmail } = validator;
+import { StatusError } from "../lib/errorHelper.js";
 
 const strongPasswordOptions = {
     minLength: 8,
