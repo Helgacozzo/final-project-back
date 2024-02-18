@@ -6,14 +6,14 @@ const eventSchema = new Schema({
         type: String,
         required: true,
         minLength: 1,
-        maxLength: 100,
+        maxLength: 50,
         trim: true,
     },
     description: {
         type: String,
         required: true,
         minLength: 1,
-        maxLength: 250,
+        maxLength: 150,
         trim: true,
     },
     more_info: {
