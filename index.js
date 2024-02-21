@@ -16,7 +16,7 @@ app.use(express.json()); // Utilizzo del middleware integrato di Express per l'i
 app.use(cors({
     origin: [
         'http://localhost:5173', 
-        'https://https://final-project-front-eta.vercel.app'
+        'https://final-project-front-eta.vercel.app'
     ],
     credentials: true
 })); // Utilizzo del middleware Cors per abilitare le richieste 
