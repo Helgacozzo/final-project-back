@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import eventsRouter from "./routes/events.js";
 import authRouter from "./routes/auth.js";
 import { requireAuth } from "./lib/authHelper.js";
+import dotenv from "dotenv"; dotenv.config();
 
 const { EXPRESS_PORT, MONGODB_URI } = process.env; // Estrazione delle variabili d'ambiente
 
