@@ -11,8 +11,15 @@ const { EXPRESS_PORT, MONGODB_URI } = process.env; // Estrazione delle variabili
 const app = express(); // Creazione di un'istanza di Express
 
 app.use(morgan('dev')); // Utilizzo del middleware Morgan per la registrazione delle richieste HTTP in modalità 'dev'
-app.use(cors()); // Utilizzo del middleware Cors per abilitare le richieste 
 app.use(express.json()); // Utilizzo del middleware integrato di Express per l'interpretazione dei dati JSON nelle richieste HTTP
+
+app.use(cors({
+    origin: [
+        'http://localhost:5173', 
+        'https://https://final-project-front-eta.vercel.app'
+    ],
+    credentials: true
+})); // Utilizzo del middleware Cors per abilitare le richieste 
 
 app.use('/events', eventsRouter); // Utilizzo del router degli eventi
 app.use('/auth', authRouter); // Utilizzo del router di autenticazione 
